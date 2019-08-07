@@ -18,6 +18,18 @@ const OnboardingForm = () => {
 }
 
 
-const FormikOnboarding = withFormik()(OnboardingForm)
+const FormikOnboarding = withFormik({
+    mapPropsToValues(values){
+        return {
+            name: values.name || '',
+            email: values.email || '',
+            password: values.password || ''
+        }
+    },
+
+    handleSubmit(values){
+        console.log('submit', values)
+    }
+})(OnboardingForm)
 
 export default FormikOnboarding;
