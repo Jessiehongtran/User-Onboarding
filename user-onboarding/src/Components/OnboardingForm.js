@@ -3,7 +3,7 @@ import axios from 'axios'
 import {Form, Field, withFormik, yupToFormErrors, ErrorMessage, setNestedObjectValues} from 'formik'
 import * as Yup from "yup";
 
-const OnboardingForm = ({touched, errors}) => {
+const OnboardingForm = ({touched, errors, values}) => {
 
     return (
         <div className="onboarding-form">
@@ -18,6 +18,12 @@ const OnboardingForm = ({touched, errors}) => {
                 <Field type="text" name="password" placeholder="Your Password" />
                 {touched.password && errors.password && <p className="error">{errors.password}</p>}
 
+                <label>
+                    I agree with Terms & Conditions
+                    <Field type="checkbox" name="agreement" checked= {values.agreement} />
+                   
+                </label>
+
                 <button>Submit</button>
             </Form>
         </div>
@@ -30,7 +36,8 @@ const FormikOnboarding = withFormik({
         return {
             name: values.name || '',
             email: values.email || '',
-            password: values.password || ''
+            password: values.password || '',
+            agreement: values.agreement || false,
         }
     },
 
