@@ -27,6 +27,13 @@ const OnboardingForm = ({touched, errors, values, status}) => {
                 <Field type="text" name="password" placeholder="Your Password" />
                 {touched.password && errors.password && <p className="error">{errors.password}</p>}
 
+                <Field component="select" name="role">
+                    <option>Please choose your role</option>
+                    <option value="student">Student</option>
+                    <option value="employee">Office Worker</option>
+                    <option value="employer">Business Owner</option>
+                </Field>
+
                 <label>
                     I agree with Terms & Conditions
                     <Field type="checkbox" name="agreement" checked= {values.agreement} />
@@ -47,6 +54,7 @@ const FormikOnboarding = withFormik({
             name: values.name || '',
             email: values.email || '',
             password: values.password || '',
+            role : values.role || '',
             agreement: values.agreement || false,
         }
     },
@@ -54,7 +62,9 @@ const FormikOnboarding = withFormik({
     validationSchema: Yup.object().shape({
         name: Yup.string().required('Name is required'),
         email: Yup.string().required('Email is required'),
-        password: Yup.string().min(8).required('Password has to contain at least 8 letters')
+        password: Yup.string().min(8).required('Password has to contain at least 8 letters'),
+        // role: Yup.string().required('Do not forget your role'),
+        // agreement: Yup.boolean().oneOf([false], 'Must Accept Terms and Conditions'),
     }),
 
     handleSubmit(values, {setStatus}){
