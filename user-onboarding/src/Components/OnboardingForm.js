@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import {Form, Field, withFormik, yupToFormErrors, ErrorMessage} from 'formik'
+import {Form, Field, withFormik, yupToFormErrors, ErrorMessage, setNestedObjectValues} from 'formik'
 import * as Yup from "yup";
 
 const OnboardingForm = ({touched, errors}) => {
@@ -40,8 +40,14 @@ const FormikOnboarding = withFormik({
         password: Yup.string().min(8).required('Password has to contain at least 8 letters')
     }),
 
-    handleSubmit(values){
+    handleSubmit(values, {setStatus}){
         console.log('submit', values)
+        axios
+            .post(`https://reqres.in/api/users`, values)
+            .then(res => {
+                setNestedObjectValues(res.data)
+            })
+            .catch(err => console.log(err))
     }
 })(OnboardingForm)
 
