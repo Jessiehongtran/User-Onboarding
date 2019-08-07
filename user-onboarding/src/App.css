@@ -32,3 +32,25 @@
     transform: rotate(360deg);
   }
 }
+
+.onboarding-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%
+}
+
+input {
+  margin: 5px;
+  width: 30%;
+}
+
+button {
+  width: 10%;
+}
