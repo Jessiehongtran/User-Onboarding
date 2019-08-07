@@ -1,9 +1,18 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import {Form, Field, withFormik, yupToFormErrors, ErrorMessage, setNestedObjectValues} from 'formik'
+import {Form, Field, withFormik} from 'formik'
 import * as Yup from "yup";
+import UserProfile from "./UserProfile"
 
-const OnboardingForm = ({touched, errors, values}) => {
+const OnboardingForm = ({touched, errors, values, status}) => {
+    const [users, setUsers] = useState([]);
+    
+    useEffect(() => {
+        if (status) {
+          setUsers([...users, status]);
+        }
+      }, [status]);
+
 
     return (
         <div className="onboarding-form">
@@ -26,6 +35,7 @@ const OnboardingForm = ({touched, errors, values}) => {
 
                 <button>Submit</button>
             </Form>
+           {users.map(user => <UserProfile key = {user.id} data={user}/> )}
         </div>
     )
 }
@@ -52,7 +62,8 @@ const FormikOnboarding = withFormik({
         axios
             .post(`https://reqres.in/api/users`, values)
             .then(res => {
-                setNestedObjectValues(res.data)
+                setStatus(res.data)
+                console.log('res in axios',res)
             })
             .catch(err => console.log(err))
     }
